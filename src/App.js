@@ -1,21 +1,26 @@
-import { Component } from 'react';
+import { Route, NavLink, Switch } from 'react-router-dom';
 import s from './App.module.css';
-import MoviesList from './Components/MoviesList';
-import Navigation from './Components/Navigation';
+import MoviesView from './views/MoviesView';
 
-class App extends Component {
-  state = {};
+import NotFoundView from './views/NotFoundView';
+import HomeView from './views/HomeView';
+import MovieDetailsView from './views/MovieDetailsView';
+import routes from './routes';
+import AppBar from './Components/AppBar';
 
-  componentDidMount() {}
+const App = () => {
+  return (
+    <div className={s.App}>
+      <AppBar />
 
-  render() {
-    return (
-      <div className={s.App}>
-        <Navigation />
-        <MoviesList />
-      </div>
-    );
-  }
-}
+      <Switch>
+        <Route exact path={routes.home} component={HomeView} />
+        <Route exact path={routes.movies} component={MoviesView} />
+        <Route path={routes.movieDetails} component={MovieDetailsView} />
+        <Route component={NotFoundView} />
+      </Switch>
+    </div>
+  );
+};
 
 export default App;
