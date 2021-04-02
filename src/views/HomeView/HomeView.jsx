@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Route, Link, NavLink, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import s from './HomeView.module.css';
 import moviesApi from '../../services/movies-api';
@@ -24,13 +24,21 @@ class HomeView extends Component {
 
   render() {
     const { movies } = this.state;
+    const { location } = this.props;
     return (
       <div>
         <h1>Trending Today</h1>
         <ul className={s.list}>
           {movies.map(({ id, original_title, original_name }) => (
             <li key={id}>
-              <Link to={`/movies/${id}`}>
+              <Link
+                to={{
+                  pathname: `/movies/${id}`,
+                  state: {
+                    from: location,
+                  },
+                }}
+              >
                 {/* <Link to={`${this.props.match.url}/${id}`}> */}
                 {original_title || original_name}{' '}
               </Link>

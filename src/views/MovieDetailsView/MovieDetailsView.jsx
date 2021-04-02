@@ -1,11 +1,12 @@
 import { Component } from 'react';
 // import axios from 'axios';
-import { Route, NavLink, Link, Switch } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import movieApi from '../../services/movies-api';
 import CastView from '../../Components/CastView';
 import ReviewsView from '../../Components/ReviewsView';
 import s from './MovieDetailsView.module.css';
 import defaultImage from '../../images/default-poster.png';
+import routes from 'routes';
 
 // import CastView from './CastView';
 // import ReviewsView from './ReviewsView';
@@ -55,6 +56,21 @@ class MovieDetailsView extends Component {
     });
   }
 
+  // ф-ция для кнопки go back
+  handleGoBack = () => {
+    const { location, history } = this.props;
+
+    // location.state.from - это откуда мы сюда перешли и куда нужно вернуться при клике на кнопку назад
+
+    // location.state && location.state.from
+    //   ? history.push(location.state.from)
+    //   : history.push(routes.home);
+
+    //оператор optional chaining
+    // усли нет location state from то вернет на routes.home
+    history.push(location?.state?.from || routes.home);
+  };
+
   render() {
     const {
       poster_path,
@@ -68,12 +84,13 @@ class MovieDetailsView extends Component {
     } = this.state;
     // const { movieId } = this.props.match.params;
 
-    const { url, path } = this.props.match;
+    const { match, location } = this.props;
+    console.log(location.state);
 
     return (
       <div>
-        <button type="button">
-          <Link to="/">Go back</Link>
+        <button type="button" onClick={this.handleGoBack}>
+          Go back
         </button>
         <div>
           <img
@@ -103,7 +120,12 @@ class MovieDetailsView extends Component {
           <ul>
             <li>
               <NavLink
-                to={`${url}/cast`}
+                to={{
+                  pathname: `${match.url}/cast`,
+                  state: {
+                    from: '/',
+                  },
+                }}
                 className={s.base}
                 activeClassName={s.active}
               >
@@ -112,7 +134,12 @@ class MovieDetailsView extends Component {
             </li>
             <li>
               <NavLink
-                to={`${url}/reviews`}
+                to={{
+                  pathname: `${match.url}/reviews`,
+                  state: {
+                    from: '/',
+                  },
+                }}
                 className={s.base}
                 activeClassName={s.active}
               >
@@ -122,14 +149,14 @@ class MovieDetailsView extends Component {
           </ul>
         </div>
         <Route
-          path={`${path}/cast`}
+          path={`${match.path}/cast`}
           render={props => {
             return <CastView {...props} cast={cast} />;
           }}
         />
 
         <Route
-          path={`${path}/reviews`}
+          path={`${match.path}/reviews`}
           render={props => {
             return <ReviewsView {...props} reviews={reviews} />;
           }}
