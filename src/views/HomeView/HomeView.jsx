@@ -2,7 +2,6 @@ import { Component } from 'react';
 import s from './HomeView.module.css';
 import moviesApi from '../../services/movies-api';
 import MoviesList from '../../Components/MoviesList';
-// import MoviesView from '../MoviesView';
 
 class HomeView extends Component {
   state = {
@@ -15,24 +14,12 @@ class HomeView extends Component {
       .fetchMovies()
       .then(movies => {
         this.setState({
-          movies: movies,
+          movies: [...movies],
         });
         // console.log(movies);
       })
       .catch(error => error.msg)
       .finally();
-
-    // поиск по ключевому слову
-    // moviesApi
-    //   .fetchByKeyWord()
-    //   .then(movies => {
-    //     this.setState({
-    //       movies: movies,
-    //     });
-    //     // console.log(movies);
-    //   })
-    //   .catch(error => error.msg)
-    //   .finally();
   }
 
   render() {

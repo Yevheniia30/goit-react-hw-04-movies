@@ -7,7 +7,7 @@ import s from './App.module.css';
 // import MovieDetailsView from './views/MovieDetailsView';
 import routes from './routes';
 import AppBar from './Components/AppBar';
-import ClipLoader from 'react-spinners/ClipLoader';
+import Loader from 'react-loader-spinner';
 
 const HomeView = lazy(() =>
   import('./views/HomeView/HomeView.jsx' /* webpackChunkName: "home-page" */),
@@ -37,7 +37,17 @@ const App = () => {
       <AppBar />
 
       {/* пока идет саспенс показываем спиннер */}
-      <Suspense fallback={<ClipLoader />}>
+      <Suspense
+        fallback={
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={60}
+            width={60}
+            timeout={3000} //3 secs
+          />
+        }
+      >
         <Switch>
           <Route exact path={routes.home} component={HomeView} />
           <Route exact path={routes.movies} component={MoviesView} />
