@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
-
 import s from './HomeView.module.css';
 import moviesApi from '../../services/movies-api';
+import MoviesList from '../../Components/MoviesList';
+// import MoviesView from '../MoviesView';
 
 class HomeView extends Component {
   state = {
@@ -21,31 +21,28 @@ class HomeView extends Component {
       })
       .catch(error => error.msg)
       .finally();
+
+    // поиск по ключевому слову
+    // moviesApi
+    //   .fetchByKeyWord()
+    //   .then(movies => {
+    //     this.setState({
+    //       movies: movies,
+    //     });
+    //     // console.log(movies);
+    //   })
+    //   .catch(error => error.msg)
+    //   .finally();
   }
 
   render() {
     const { movies } = this.state;
-    const { location } = this.props;
+    // const { location } = this.props;
     return (
       <div>
         <h1>Trending Today</h1>
-        <ul className={s.list}>
-          {movies.map(({ id, original_title, original_name }) => (
-            <li key={id}>
-              <Link
-                to={{
-                  pathname: `/movies/${id}`,
-                  state: {
-                    from: location,
-                  },
-                }}
-              >
-                {/* <Link to={`${this.props.match.url}/${id}`}> */}
-                {original_title || original_name}{' '}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <MoviesList movies={movies} />
+        {/* <MoviesView /> */}
       </div>
     );
   }

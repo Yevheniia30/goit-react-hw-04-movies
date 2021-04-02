@@ -84,8 +84,8 @@ class MovieDetailsView extends Component {
     } = this.state;
     // const { movieId } = this.props.match.params;
 
-    const { match, location } = this.props;
-    console.log(location.state);
+    const { match } = this.props;
+    // console.log(location.state);
 
     return (
       <div>

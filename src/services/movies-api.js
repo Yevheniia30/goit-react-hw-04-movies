@@ -11,10 +11,10 @@ const fetchMovies = () => {
 };
 
 // по ключевому слову
-const fetchByKeyWord = () => {
+const fetchByKeyWord = ({ query }) => {
   return axios
     .get(
-      `/3/search/movie?query=cat&api_key=${API_KEY}&language=en-US&page=1&include_adult=false`,
+      `/3/search/movie?query=${query}&api_key=${API_KEY}&language=en-US&page=1&include_adult=false`,
     )
     .then(({ data }) => data.results);
 };
