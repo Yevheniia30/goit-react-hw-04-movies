@@ -9,6 +9,7 @@ class HomeView extends Component {
     movies: [],
   };
 
+  // тренды
   componentDidMount() {
     moviesApi
       .fetchMovies()
