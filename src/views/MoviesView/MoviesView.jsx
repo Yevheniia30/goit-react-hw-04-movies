@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-
+import NotFoundView from '../../views/NotFoundView';
 import MoviesList from '../../Components/MoviesList';
 import moviesApi from '../../services/movies-api';
+import s from './MoviesView.module.css';
 
 class MoviesView extends Component {
   state = {
     movies: [],
     query: '',
     isLoading: false,
+    error: null,
   };
 
   // поиск по ключевому слову
@@ -20,6 +22,7 @@ class MoviesView extends Component {
 
   handleSearchMovie = e => {
     e.preventDefault();
+
     const { query } = this.state;
     this.setState({ isLoading: true });
     moviesApi
@@ -28,16 +31,21 @@ class MoviesView extends Component {
         this.setState({
           movies: [...movies],
         });
+        this.props.history.push({
+          ...this.props.location,
+          pathname: this.props.location.pathname,
+          search: `?query=${query}`,
+        });
         // console.log(movies);
       })
-      .catch(error => error.msg)
+      .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
 
     this.setState({ query: '' });
   };
 
   render() {
-    const { query, movies, isLoading } = this.state;
+    const { query, movies, isLoading, error } = this.state;
     return (
       <div>
         <h1>MoviesPage</h1>
@@ -49,8 +57,11 @@ class MoviesView extends Component {
             autoFocus
             placeholder="Search images and photos"
             onChange={this.handleChange}
+            className={s.search_input}
           />
-          <button type="submit">Search</button>
+          <button type="submit" className={s.search_btn}>
+            Search
+          </button>
         </form>
         {isLoading && (
           <Loader
@@ -62,7 +73,11 @@ class MoviesView extends Component {
           />
         )}
 
-        <MoviesList movies={movies} />
+        {error ? (
+          <p>Nothing was found. Please enter more specific value</p>
+        ) : (
+          <MoviesList movies={movies} />
+        )}
       </div>
     );
   }

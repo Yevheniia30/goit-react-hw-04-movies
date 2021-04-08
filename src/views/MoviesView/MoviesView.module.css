@@ -1,0 +1,9 @@
+.search_input {
+  width: 300px;
+}
+.search_input,
+.search_btn {
+  border-radius: 3px;
+  border: 1px solid #cecece;
+  padding: 4px;
+}

@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import s from './Navigation.module.css';
 import routes from '../../routes';
 
@@ -8,12 +8,16 @@ const Navigation = () => {
       <NavLink
         exact
         to={routes.home}
-        className={s.base}
+        className={[s['base'], s['link']].join(' ')}
         activeClassName={s.active}
       >
         Home
       </NavLink>
-      <NavLink to={routes.movies} className={s.base} activeClassName={s.active}>
+      <NavLink
+        to={routes.movies}
+        className={[s['base'], s['link']].join(' ')}
+        activeClassName={s.active}
+      >
         Movies
       </NavLink>
     </nav>

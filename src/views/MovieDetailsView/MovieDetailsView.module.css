@@ -6,3 +6,26 @@
   color: tomato;
   text-decoration: none;
 }
+.movie_card {
+  display: flex;
+  border-bottom: 3px solid #cecace;
+}
+.movie_description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+.add_info {
+  border-bottom: 3px solid #cecace;
+}
+.go_back_btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid #cecace;
+}
+.icon {
+  width: 15px;
+  margin-right: 5px;
+}

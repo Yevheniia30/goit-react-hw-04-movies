@@ -7,6 +7,7 @@ import ReviewsView from '../../Components/ReviewsView';
 import s from './MovieDetailsView.module.css';
 import defaultImage from '../../images/default-poster.png';
 import routes from 'routes';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // import CastView from './CastView';
 // import ReviewsView from './ReviewsView';
@@ -22,38 +23,56 @@ class MovieDetailsView extends Component {
     vote_average: '',
     cast: [],
     reviews: [],
+    isLoading: false,
+    error: null,
   };
 
   componentDidMount() {
     // инфо о фильме
     const { movieId } = this.props.match.params;
-
-    movieApi.fetchMovieDetals({ movieId }).then(movie => {
-      this.setState({
-        // распіляем полученный объект в стейт и его значения заменяют значения стейта
-        ...movie,
-      });
-      //   console.log(movie);
-    });
+    this.setState({ isLoading: true });
+    movieApi
+      .fetchMovieDetals({ movieId })
+      .then(movie => {
+        this.setState({
+          // распіляем полученный объект в стейт и его значения заменяют значения стейта
+          ...movie,
+        });
+        //   console.log(movie);
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
 
     // жанры
-    movieApi.fetchGenres().then(genres => genres);
+    movieApi
+      .fetchGenres()
+      .then(genres => genres)
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
 
     // рецензии
-    movieApi.fetchReviews({ movieId }).then(reviews => {
-      this.setState({
-        reviews: [...reviews],
-      });
-      // console.log(reviews);
-    });
+    movieApi
+      .fetchReviews({ movieId })
+      .then(reviews => {
+        this.setState({
+          reviews: [...reviews],
+        });
+        // console.log(reviews);
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
 
     // актеры
-    movieApi.fetchCast({ movieId }).then(({ cast }) => {
-      this.setState({
-        cast: [...cast],
-      });
-      //   console.log(cast);
-    });
+    movieApi
+      .fetchCast({ movieId })
+      .then(({ cast }) => {
+        this.setState({
+          cast: [...cast],
+        });
+        //   console.log(cast);
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
   }
 
   // ф-ция для кнопки go back
@@ -89,10 +108,14 @@ class MovieDetailsView extends Component {
 
     return (
       <div>
-        <button type="button" onClick={this.handleGoBack}>
-          Go back
+        <button
+          type="button"
+          onClick={this.handleGoBack}
+          className={s.go_back_btn}
+        >
+          <ArrowBackIcon className={s.icon} /> Go back
         </button>
-        <div>
+        <div className={s.movie_card}>
           <img
             src={
               !poster_path
@@ -102,20 +125,22 @@ class MovieDetailsView extends Component {
             alt={original_title}
             width="300px"
           />
-          <h2>
-            {original_title} <span>({release_date})</span>{' '}
-          </h2>
-          <p>User score: {vote_average * 10}%</p>
-          <h3>Overview</h3>
-          <p>{overview}</p>
-          <h3>Genres</h3>
-          <ul>
-            {genres.map(({ id, name }) => (
-              <li key={id}>{name}</li>
-            ))}
-          </ul>
+          <div className={s.movie_description}>
+            <h2>
+              {original_title} <span>({release_date})</span>{' '}
+            </h2>
+            <p>User score: {vote_average * 10}%</p>
+            <h3>Overview</h3>
+            <p>{overview}</p>
+            <h3>Genres</h3>
+            <ul>
+              {genres.map(({ id, name }) => (
+                <li key={id}>{name}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div>
+        <div className={s.add_info}>
           <p>Additional information</p>
           <ul>
             <li>

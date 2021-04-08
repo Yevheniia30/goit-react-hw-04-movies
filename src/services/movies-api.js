@@ -6,7 +6,7 @@ const API_KEY = 'c4360f2fc66490777a6befee451fce21';
 // тренды
 const fetchMovies = () => {
   return axios
-    .get(`/3/trending/all/day?api_key=${API_KEY}`)
+    .get(`/3/trending/movie/day?api_key=${API_KEY}`)
     .then(({ data }) => data.results);
 };
 

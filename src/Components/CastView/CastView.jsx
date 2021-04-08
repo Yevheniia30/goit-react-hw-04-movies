@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import s from './CastView.module.css';
 import defaultImage from '../../images/default.jpg';
 
 class CastView extends Component {
@@ -12,7 +13,7 @@ class CastView extends Component {
     const { cast } = this.props;
     return (
       <div>
-        <ul>
+        <ul className={s.cast_list}>
           {cast.map(({ id, name, profile_path, character }) => (
             <li key={id}>
               <img
@@ -24,7 +25,7 @@ class CastView extends Component {
                 alt={name}
                 width="200px"
               ></img>
-              <p>{name}</p>
+              <p className={s.cast_name}>{name}</p>
               <p>Character: {character}</p>
             </li>
           ))}

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import s from './ReviewsView.module.css';
 
 class ReviewsView extends Component {
   state = {};
@@ -15,7 +16,7 @@ class ReviewsView extends Component {
           <ul>
             {reviews.map(({ id, author, content }) => (
               <li key={id}>
-                <p>Author: {author}</p>
+                <p className={s.rew_author}>Author: {author}</p>
                 <p>{content}</p>
               </li>
             ))}
