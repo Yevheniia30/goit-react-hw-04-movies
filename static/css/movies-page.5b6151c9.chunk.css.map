@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/views/MoviesView/MoviesView.module.css"],"names":[],"mappings":"AAAA,gCACE,WACF,CACA,8DAEE,iBAAkB,CAClB,wBAAyB,CACzB,WACF","file":"movies-page.5b6151c9.chunk.css","sourcesContent":[".search_input {\n  width: 300px;\n}\n.search_input,\n.search_btn {\n  border-radius: 3px;\n  border: 1px solid #cecece;\n  padding: 4px;\n}\n"]}
