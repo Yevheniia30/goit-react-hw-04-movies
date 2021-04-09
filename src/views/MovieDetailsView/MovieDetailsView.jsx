@@ -1,5 +1,5 @@
 import { Component } from 'react';
-// import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Route, NavLink } from 'react-router-dom';
 import movieApi from '../../services/movies-api';
 import CastView from '../../Components/CastView';
@@ -9,12 +9,8 @@ import defaultImage from '../../images/default-poster.png';
 import routes from 'routes';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-// import CastView from './CastView';
-// import ReviewsView from './ReviewsView';
-
 class MovieDetailsView extends Component {
   state = {
-    // movie: null,
     id: '',
     poster_path: '',
     original_title: '',
@@ -38,7 +34,6 @@ class MovieDetailsView extends Component {
           // распіляем полученный объект в стейт и его значения заменяют значения стейта
           ...movie,
         });
-        //   console.log(movie);
       })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -57,7 +52,6 @@ class MovieDetailsView extends Component {
         this.setState({
           reviews: [...reviews],
         });
-        // console.log(reviews);
       })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -69,7 +63,6 @@ class MovieDetailsView extends Component {
         this.setState({
           cast: [...cast],
         });
-        //   console.log(cast);
       })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -86,7 +79,7 @@ class MovieDetailsView extends Component {
     //   : history.push(routes.home);
 
     //оператор optional chaining
-    // усли нет location state from то вернет на routes.home
+    // если нет location state from то вернет на routes.home
     history.push(location?.state?.from || routes.home);
   };
 
@@ -102,6 +95,7 @@ class MovieDetailsView extends Component {
       release_date,
     } = this.state;
     // const { movieId } = this.props.match.params;
+    // console.log(this.state);
 
     const { match } = this.props;
     // console.log(location.state);
@@ -190,5 +184,20 @@ class MovieDetailsView extends Component {
     );
   }
 }
+
+MovieDetailsView.propTypes = {
+  poster_path: PropTypes.string,
+  original_title: PropTypes.string,
+  vote_average: PropTypes.number,
+  overview: PropTypes.string,
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.isRequired,
+      name: PropTypes.string,
+    }),
+  ),
+
+  release_date: PropTypes.string,
+};
 
 export default MovieDetailsView;

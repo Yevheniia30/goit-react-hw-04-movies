@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import NotFoundView from '../../views/NotFoundView';
 import MoviesList from '../../Components/MoviesList';
 import moviesApi from '../../services/movies-api';
 import s from './MoviesView.module.css';
@@ -24,6 +23,7 @@ class MoviesView extends Component {
     e.preventDefault();
 
     const { query } = this.state;
+    const { location, history } = this.props;
     this.setState({ isLoading: true });
     moviesApi
       .fetchByKeyWord({ query })
@@ -31,12 +31,11 @@ class MoviesView extends Component {
         this.setState({
           movies: [...movies],
         });
-        this.props.history.push({
-          ...this.props.location,
-          pathname: this.props.location.pathname,
-          search: `?query=${query}`,
+        history.push({
+          ...location,
+          // pathname: location.pathname,
+          search: `query=${query}`,
         });
-        // console.log(movies);
       })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -45,7 +44,7 @@ class MoviesView extends Component {
   };
 
   render() {
-    const { query, movies, isLoading, error } = this.state;
+    const { query, movies, isLoading } = this.state;
     return (
       <div>
         <h1>MoviesPage</h1>
@@ -69,15 +68,11 @@ class MoviesView extends Component {
             color="#00BFFF"
             height={100}
             width={100}
-            timeout={3000} //3 secs
+            timeout={3000}
           />
         )}
 
-        {error ? (
-          <p>Nothing was found. Please enter more specific value</p>
-        ) : (
-          <MoviesList movies={movies} />
-        )}
+        <MoviesList movies={movies} />
       </div>
     );
   }

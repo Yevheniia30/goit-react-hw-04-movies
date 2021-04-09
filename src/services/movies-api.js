@@ -33,7 +33,7 @@ const fetchGenres = () => {
     .then(({ data }) => data.genres);
 };
 
-// обзоры
+// рецензии
 const fetchReviews = ({ movieId }) => {
   return axios
     .get(`/3/movie/${movieId}/reviews?api_key=${API_KEY}&language=en-US&page=1`)

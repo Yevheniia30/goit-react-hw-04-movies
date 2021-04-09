@@ -1,15 +1,11 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import s from './ReviewsView.module.css';
 
 class ReviewsView extends Component {
-  state = {};
-
-  componentDidMount() {
-    // console.log(this.props);
-  }
-
   render() {
     const { reviews } = this.props;
+
     return (
       <div>
         {reviews.length > 0 ? (
@@ -28,5 +24,15 @@ class ReviewsView extends Component {
     );
   }
 }
+
+ReviewsView.propTypes = {
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      author: PropTypes.string,
+      content: PropTypes.string,
+    }),
+  ),
+};
 
 export default ReviewsView;

@@ -1,16 +1,12 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import s from './CastView.module.css';
 import defaultImage from '../../images/default.jpg';
 
 class CastView extends Component {
-  state = {};
-
-  componentDidMount() {
-    // console.log(this.props);
-  }
-
   render() {
     const { cast } = this.props;
+
     return (
       <div>
         <ul className={s.cast_list}>
@@ -34,5 +30,16 @@ class CastView extends Component {
     );
   }
 }
+
+CastView.propTypes = {
+  cast: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      profile_path: PropTypes.string,
+      character: PropTypes.string,
+    }),
+  ),
+};
 
 export default CastView;

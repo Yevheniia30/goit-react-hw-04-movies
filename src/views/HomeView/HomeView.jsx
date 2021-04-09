@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import s from './HomeView.module.css';
+// import s from './HomeView.module.css';
 import moviesApi from '../../services/movies-api';
 import MoviesList from '../../Components/MoviesList';
 import NotFoundView from '../../views/NotFoundView';
@@ -22,7 +22,6 @@ class HomeView extends Component {
         this.setState({
           movies: [...movies],
         });
-        // console.log(movies);
       })
       .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -39,7 +38,7 @@ class HomeView extends Component {
             color="#00BFFF"
             height={100}
             width={100}
-            timeout={3000} //3 secs
+            timeout={3000}
           />
         )}
         {error ? (
@@ -50,8 +49,6 @@ class HomeView extends Component {
             <MoviesList movies={movies} />
           </div>
         )}
-
-        {/* <MoviesView /> */}
       </div>
     );
   }

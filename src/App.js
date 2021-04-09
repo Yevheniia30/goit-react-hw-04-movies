@@ -1,10 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import s from './App.module.css';
-// import MoviesView from './views/MoviesView';
-// import NotFoundView from './views/NotFoundView';
-// import HomeView from './views/HomeView';
-// import MovieDetailsView from './views/MovieDetailsView';
 import routes from './routes';
 import AppBar from './Components/AppBar';
 import Loader from 'react-loader-spinner';
@@ -44,7 +40,7 @@ const App = () => {
             color="#00BFFF"
             height={60}
             width={60}
-            timeout={3000} //3 secs
+            timeout={3000}
           />
         }
       >
